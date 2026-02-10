@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hey Zimmie 💚</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #b9fbc0, #98f5e1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+/* CARD */
+.card {
+  background: white;
+  padding: 50px 60px;
+  border-radius: 22px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  width: 420px;
+  position: relative;
+  z-index: 5;
+}
+
+h1 {
+  font-size: 2.4rem;
+  margin-bottom: 15px;
+  color: #1b4332;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 35px;
+}
+
+.buttons {
+  position: relative;
+  height: 80px;
+}
+
+button {
+  padding: 14px 32px;
+  font-size: 1.1rem;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: absolute;
+}
+
+#yesBtn {
+  background: #52b788;
+  color: white;
+  left: 80px;
+}
+
+#noBtn {
+  background: #e0e0e0;
+  color: #333;
+  left: 230px;
+}
+
+/* FINAL MESSAGE */
+.final {
+  font-size: 2rem;
+  color: #1b4332;
+}
+
+/* HEART EXPLOSION */
+.heart {
+  position: absolute;
+  font-size: 22px;
+  animation: burst 1.6s ease-out forwards;
+}
+
+@keyframes burst {
+  from {
+    transform: translate(0,0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translate(var(--x), var(--y)) scale(1.6);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <h1>Hey Zimmie 💚</h1>
+  <p>Will you be my best friend (maybe more later)?</p>
+
+  <div class="buttons">
+    <button id="yesBtn">Yes</button>
+    <button id="noBtn">No</button>
+  </div>
+</div>
+
+<script>
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const card = document.getElementById("card");
+
+let scale = 1;
+let noIndex = 0;
+
+const noTexts = [
+  "are you sure?",
+  "princess u sure?",
+  "princesssssss",
+  "just say yes princess",
+  "princess pleaseeee 😭"
+];
+
+// NO button behavior
+noBtn.addEventListener("click", () => {
+  scale += 0.25;
+  yesBtn.style.transform = `scale(${scale})`;
+
+  noBtn.style.left = Math.random() * 260 + "px";
+  noBtn.style.top = Math.random() * 40 + "px";
+
+  if (noIndex < noTexts.length) {
+    noBtn.textContent = noTexts[noIndex];
+    noIndex++;
+  }
+});
+
+// YES button behavior
+yesBtn.addEventListener("click", () => {
+
+  // 💥 HEART EXPLOSION IMMEDIATELY
+  for (let i = 0; i < 30; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = "💚";
+
+    const angle = Math.random() * Math.PI * 2;
+    const distance = Math.random() * 180 + 40;
+
+    heart.style.setProperty("--x", Math.cos(angle) * distance + "px");
+    heart.style.setProperty("--y", Math.sin(angle) * distance + "px");
+
+    heart.style.left = "50%";
+    heart.style.top = "50%";
+
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1600);
+  }
+
+  // First message
+  card.innerHTML = `
+    <div class="final">
+      I hope this made you smile 😊
+    </div>
+  `;
+
+  // Second message after delay
+  setTimeout(() => {
+    card.innerHTML = `
+      <div class="final">
+        Thank you so much for appearing in my life 💚
+      </div>
+    `;
+  }, 1800);
+});
+</script>
+
+</body>
+</html>
